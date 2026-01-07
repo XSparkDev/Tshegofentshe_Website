@@ -55,7 +55,7 @@ export function Navbar() {
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "shadow-md" : ""} bg-background`}
       >
         <div className="container mx-auto px-4 md:px-6 py-0 flex items-center justify-between gap-4 md:gap-8">
-          <Link href="/" className="flex items-center group flex-shrink-0 h-16 md:h-20 overflow-hidden">
+          <Link href="/" className="flex items-center group flex-shrink md:flex-shrink-0 h-16 md:h-20 overflow-hidden">
             <div className="relative h-48 w-96 md:h-56 md:w-[28rem] -my-16 md:-my-18">
               <Image
                 src="/ChatGPT Image Dec 2, 2025, 02_30_12 PM.png"
@@ -109,9 +109,13 @@ export function Navbar() {
                 <SheetTrigger asChild>
                   <button
                     className="p-2 text-foreground hover:text-primary transition-colors"
-                    aria-label="Open menu"
+                    aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                   >
-                    <Menu className="h-6 w-6" />
+                    <div className="flex flex-col justify-between w-6 h-4">
+                      <span className="block h-[2px] w-full rounded-full bg-current" />
+                      <span className="block h-[2px] w-full rounded-full bg-current" />
+                      <span className="block h-[2px] w-full rounded-full bg-current" />
+                    </div>
                   </button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 flex flex-col">
@@ -199,7 +203,11 @@ export function Navbar() {
                 className="p-2 text-foreground hover:text-primary transition-colors"
                 aria-label="Open menu"
               >
-                <Menu className="h-6 w-6" />
+                <div className="flex flex-col justify-between w-6 h-4">
+                  <span className="block h-[2px] w-full rounded-full bg-current" />
+                  <span className="block h-[2px] w-full rounded-full bg-current" />
+                  <span className="block h-[2px] w-full rounded-full bg-current" />
+                </div>
               </button>
             )}
           </div>
@@ -235,7 +243,7 @@ export function Navbar() {
 
       <div className="bg-foreground text-background py-2">
         <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 items-center gap-4">
-          <div className="flex items-center gap-3 justify-start">
+          <div className="flex items-center gap-3 justify-center md:justify-start text-center md:text-left">
             <div className="bg-primary rounded-full p-3">
               <Phone className="h-5 w-5 text-primary-foreground" />
             </div>
@@ -245,7 +253,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 justify-center md:justify-center">
+          <div className="flex items-center gap-3 justify-center text-center md:text-left">
             <div className="bg-primary rounded-full p-3">
               <Clock className="h-5 w-5 text-primary-foreground" />
             </div>
@@ -255,8 +263,8 @@ export function Navbar() {
             </div>
           </div>
 
-          <Link href="#contact" className="justify-self-end">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-6 text-base font-medium">
+          <Link href="#contact" className="justify-self-center md:justify-self-end w-full md:w-auto">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-[90%] max-w-sm mx-auto md:mx-0 md:w-auto px-6 md:px-8 py-3 md:py-6 text-sm md:text-base font-medium text-center">
               SCHEDULE A PICKUP
             </Button>
           </Link>
