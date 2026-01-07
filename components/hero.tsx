@@ -242,7 +242,7 @@ export function Hero() {
       <button
         type="button"
         onClick={goToPrev}
-        className="absolute left-2 md:left-4 bottom-20 md:top-1/2 md:-translate-y-1/2 z-10 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background p-2 md:p-3 rounded-full transition-all"
+        className="absolute left-2 md:left-4 bottom-8 md:top-1/2 md:-translate-y-1/2 z-10 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background p-2 md:p-3 rounded-full transition-all"
         aria-label="Previous slide"
       >
         <svg className="h-5 w-5 md:h-6 md:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -252,7 +252,7 @@ export function Hero() {
       <button
         type="button"
         onClick={goToNext}
-        className="absolute right-2 md:right-4 bottom-20 md:top-1/2 md:-translate-y-1/2 z-10 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background p-2 md:p-3 rounded-full transition-all"
+        className="absolute right-2 md:right-4 bottom-8 md:top-1/2 md:-translate-y-1/2 z-10 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background p-2 md:p-3 rounded-full transition-all"
         aria-label="Next slide"
       >
         <svg className="h-5 w-5 md:h-6 md:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
