@@ -237,7 +237,7 @@ export function Navbar() {
 
       <div className="bg-foreground text-background py-2">
         <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 items-center gap-4">
-          <div className="flex items-center gap-3 justify-start md:justify-start">
+          <div className="flex items-center gap-3 justify-start md:justify-start w-[90%] md:w-auto mx-auto md:mx-0">
             <div className="bg-primary rounded-full p-3 flex-shrink-0 w-[44px] md:w-auto">
               <Phone className="h-5 w-5 text-primary-foreground" />
             </div>
@@ -247,7 +247,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 justify-start md:justify-center">
+          <div className="flex items-center gap-3 justify-start md:justify-center w-[90%] md:w-auto mx-auto md:mx-0">
             <div className="bg-primary rounded-full p-3 flex-shrink-0 w-[44px] md:w-auto">
               <Clock className="h-5 w-5 text-primary-foreground" />
             </div>
@@ -257,8 +257,8 @@ export function Navbar() {
             </div>
           </div>
 
-          <Link href="#contact" className="justify-self-start md:justify-self-end">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-6 text-base font-medium">
+          <Link href="#contact" className="justify-self-center md:justify-self-end w-full md:w-auto flex justify-center">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 md:px-8 py-6 text-base font-medium w-[90%] md:w-auto min-w-[300px] md:min-w-0">
               SCHEDULE A PICKUP
             </Button>
           </Link>
