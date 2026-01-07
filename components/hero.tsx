@@ -100,7 +100,7 @@ export function Hero() {
 
       <div className="container mx-auto px-4 md:px-6 relative z-10 h-full flex flex-col">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 flex-1">
-          <div className="max-w-5xl text-left flex-1 mt-[calc(2rem-1cm)] md:mt-[4cm] relative">
+          <div className="max-w-5xl text-left flex-1 mt-[calc(2rem-5cm)] md:mt-[4cm] relative">
             <div className="space-y-6">
               <motion.h1
                 key={`heading-${currentIndex}`}
@@ -174,7 +174,12 @@ export function Hero() {
             <div className="max-w-5xl w-full md:w-auto">
               <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-4">
               {currentSlide.buttonHref.startsWith("http") ? (
-                <a href={currentSlide.buttonHref} target="_blank" rel="noopener noreferrer" className="inline-flex w-[280px] md:w-auto">
+                <a
+                  href={currentSlide.buttonHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-[280px] md:w-auto order-3 md:order-none"
+                >
                   <Button
                     size="lg"
                     className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
@@ -184,7 +189,10 @@ export function Hero() {
                   </Button>
                 </a>
               ) : (
-                <Link href={currentSlide.buttonHref} className="inline-flex w-[280px] md:w-auto">
+                <Link
+                  href={currentSlide.buttonHref}
+                  className="inline-flex w-[280px] md:w-auto order-3 md:order-none"
+                >
                   <Button
                     size="lg"
                     className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
@@ -198,7 +206,12 @@ export function Hero() {
               {/* Lab and Academy buttons - only show on management slide */}
               {currentSlide.key === "management" && (
                 <>
-                  <a href="https://vaalwaterlab.co.za" target="_blank" rel="noopener noreferrer" className="inline-flex w-[280px] md:w-auto">
+                  <a
+                    href="https://vaalwaterlab.co.za"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-[280px] md:w-auto order-1 md:order-none"
+                  >
                     <Button
                       size="lg"
                       className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
@@ -206,7 +219,12 @@ export function Hero() {
                       Lab
                     </Button>
                   </a>
-                  <a href="https://tshegofentse-academy.co.za" target="_blank" rel="noopener noreferrer" className="inline-flex w-[280px] md:w-auto">
+                  <a
+                    href="https://tshegofentse-academy.co.za"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-[280px] md:w-auto order-2 md:order-none"
+                  >
                     <Button
                       size="lg"
                       className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
