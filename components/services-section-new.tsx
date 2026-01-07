@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion"
 import { Trash2, HeartPulse, Droplets, Scale, Users } from "lucide-react"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -70,6 +70,7 @@ export function ServicesSectionNew() {
   const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
   const iconsRef = useRef<HTMLDivElement[]>([])
+  const hasAnimatedRef = useRef(false)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -82,10 +83,13 @@ export function ServicesSectionNew() {
 
     if (shouldReduceMotion || !sectionRef.current) return
 
+    // Check if already animated
+    if (sectionRef.current.hasAttribute("data-animated")) return
+
     const icons = iconsRef.current.filter(Boolean)
     if (icons.length === 0) return
 
-    gsap.from(icons, {
+    const animation = gsap.from(icons, {
       scale: 0,
       rotation: 180,
       opacity: 0,
@@ -96,11 +100,18 @@ export function ServicesSectionNew() {
         trigger: sectionRef.current,
         start: "top 80%",
         toggleActions: "play none none none",
+        onEnter: () => {
+          if (!sectionRef.current?.hasAttribute("data-animated")) {
+            sectionRef.current?.setAttribute("data-animated", "true")
+          }
+        },
       },
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      if (animation.scrollTrigger) {
+        animation.scrollTrigger.kill()
+      }
     }
   }, [shouldReduceMotion])
 
@@ -118,6 +129,7 @@ export function ServicesSectionNew() {
           whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={shouldReduceMotion ? undefined : { duration: 1.0 }}
+          style={{ willChange: shouldReduceMotion ? "auto" : "opacity, transform" }}
         >
           SERVICES
         </motion.h2>
@@ -134,6 +146,7 @@ export function ServicesSectionNew() {
               viewport={{ once: true, amount: 0.3 }}
               variants={cardVariants}
               whileHover={shouldReduceMotion ? undefined : cardHover}
+              style={{ willChange: shouldReduceMotion ? "auto" : "transform, opacity" }}
             >
               <div
                 ref={(el) => {

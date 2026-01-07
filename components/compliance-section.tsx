@@ -187,7 +187,10 @@ export function ComplianceSection() {
 
     if (shouldReduceMotion || !sectionRef.current) return
 
-    // Icons gently float up and down
+    // Check if already animated
+    if (sectionRef.current.hasAttribute("data-animated")) return
+
+    // Icons gently float up and down (continuous animation, no flag needed)
     const icons = sectionRef.current.querySelectorAll(".compliance-icon")
     icons.forEach((icon, index) => {
       gsap.to(icon, {
@@ -200,10 +203,10 @@ export function ComplianceSection() {
       })
     })
 
-    // Line draws in from left
+    // Line draws in from left (one-time animation)
     const underline = sectionRef.current.querySelector(".title-underline")
-    if (underline) {
-      gsap.from(underline, {
+    if (underline && !underline.hasAttribute("data-animated")) {
+      const animation = gsap.from(underline, {
         scaleX: 0,
         transformOrigin: "left",
         duration: 1,
@@ -212,12 +215,32 @@ export function ComplianceSection() {
           trigger: sectionRef.current,
           start: "top 80%",
           toggleActions: "play none none none",
+          onEnter: () => {
+            if (underline && !underline.hasAttribute("data-animated")) {
+              underline.setAttribute("data-animated", "true")
+            }
+          },
         },
       })
+
+      return () => {
+        if (animation.scrollTrigger) {
+          animation.scrollTrigger.kill()
+        }
+        ScrollTrigger.getAll().forEach((trigger) => {
+          if (trigger.vars?.trigger === sectionRef.current) {
+            trigger.kill()
+          }
+        })
+      }
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.vars?.trigger === sectionRef.current) {
+          trigger.kill()
+        }
+      })
     }
   }, [shouldReduceMotion])
 
