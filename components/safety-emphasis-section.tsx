@@ -116,8 +116,11 @@ export function SafetyEmphasisSection() {
   useEffect(() => {
     if (shouldReduceMotion || !sectionRef.current) return
 
+    // Check if already animated
+    if (sectionRef.current.hasAttribute("data-animated")) return
+
     // Section reveals with diagonal wipe effect
-    gsap.from(sectionRef.current, {
+    const animation = gsap.from(sectionRef.current, {
       clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)",
       duration: 1.2,
       ease: "power3.out",
@@ -125,6 +128,11 @@ export function SafetyEmphasisSection() {
         trigger: sectionRef.current,
         start: "top 80%",
         toggleActions: "play none none none",
+        onEnter: () => {
+          if (sectionRef.current && !sectionRef.current.hasAttribute("data-animated")) {
+            sectionRef.current.setAttribute("data-animated", "true")
+          }
+        },
       },
     })
 
@@ -168,7 +176,15 @@ export function SafetyEmphasisSection() {
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      if (animation?.scrollTrigger) {
+        animation.scrollTrigger.kill()
+      }
+      ScrollTrigger.getAll().forEach((trigger) => {
+        const triggerEl = trigger.vars?.trigger
+        if (triggerEl === sectionRef.current || triggerEl === imageRef.current) {
+          trigger.kill()
+        }
+      })
     }
   }, [shouldReduceMotion])
 

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { MapPin, Phone, Mail } from "lucide-react"
 import { motion, useReducedMotion } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { useInView } from "framer-motion"
 
 const contactInfoItems = [
@@ -30,6 +30,13 @@ export function ContactSection() {
   const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true)
+    }
+  }, [isInView, hasAnimated])
 
   return (
     <motion.section
@@ -37,9 +44,7 @@ export function ContactSection() {
       id="contact"
       className="py-20 bg-background"
       initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
-      animate={shouldReduceMotion || isInView ? undefined : { opacity: 0, y: 30 }}
-      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      animate={shouldReduceMotion || hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container mx-auto px-4 md:px-6">
@@ -58,9 +63,7 @@ export function ContactSection() {
                 key={item.title}
                 className="flex items-start gap-4"
                 initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-                animate={shouldReduceMotion || isInView ? undefined : { opacity: 0, y: 20 }}
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={shouldReduceMotion || hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{
                   duration: 0.4,
                   ease: "easeOut",
@@ -89,9 +92,7 @@ export function ContactSection() {
           <motion.div
             className="bg-muted/30 p-8 rounded-lg border border-border/50"
             initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-            animate={shouldReduceMotion || isInView ? undefined : { opacity: 0, y: 20 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={shouldReduceMotion || hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: shouldReduceMotion ? 0 : 0.2 }}
           >
             <form className="space-y-6">

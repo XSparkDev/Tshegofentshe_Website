@@ -350,12 +350,15 @@ export function StepwiseApproachSection() {
 
     if (shouldReduceMotion || !flowchartRef.current) return
 
+    // Check if already animated
+    if (flowchartRef.current.hasAttribute("data-animated")) return
+
     // Enhanced arrow drawing animation
     const arrows = flowchartRef.current.querySelectorAll(".arrow-line")
     arrows.forEach((arrow, index) => {
       const line = arrow.querySelector("line")
-      if (line) {
-        gsap.fromTo(
+      if (line && !line.hasAttribute("data-animated")) {
+        const arrowAnim = gsap.fromTo(
           line,
           {
             strokeDasharray: "0, 1000",
@@ -371,6 +374,14 @@ export function StepwiseApproachSection() {
               trigger: flowchartRef.current,
               start: "top 70%",
               toggleActions: "play none none none",
+              onEnter: () => {
+                if (line && !line.hasAttribute("data-animated")) {
+                  line.setAttribute("data-animated", "true")
+                }
+                if (flowchartRef.current && !flowchartRef.current.hasAttribute("data-animated")) {
+                  flowchartRef.current.setAttribute("data-animated", "true")
+                }
+              },
             },
           }
         )
@@ -378,7 +389,12 @@ export function StepwiseApproachSection() {
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      ScrollTrigger.getAll().forEach((trigger) => {
+        const triggerEl = trigger.vars?.trigger
+        if (triggerEl === flowchartRef.current) {
+          trigger.kill()
+        }
+      })
     }
   }, [shouldReduceMotion])
 

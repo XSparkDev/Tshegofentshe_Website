@@ -63,9 +63,12 @@ export function IndustriesSectionNew() {
   useEffect(() => {
     if (shouldReduceMotion || !sectionRef.current) return
 
+    // Check if already animated
+    if (sectionRef.current.hasAttribute("data-animated")) return
+
     // Content slide in with blur
-    if (contentRef.current) {
-      gsap.from(contentRef.current, {
+    if (contentRef.current && !contentRef.current.hasAttribute("data-animated")) {
+      const contentAnim = gsap.from(contentRef.current, {
         x: -100,
         opacity: 0,
         filter: "blur(10px)",
@@ -74,13 +77,18 @@ export function IndustriesSectionNew() {
           trigger: sectionRef.current,
           start: "top 70%",
           toggleActions: "play none none none",
+          onEnter: () => {
+            if (contentRef.current && !contentRef.current.hasAttribute("data-animated")) {
+              contentRef.current.setAttribute("data-animated", "true")
+            }
+          },
         },
       })
     }
 
     // Image curtain wipe
-    if (imageRef.current) {
-      gsap.fromTo(
+    if (imageRef.current && !imageRef.current.hasAttribute("data-animated")) {
+      const imageAnim = gsap.fromTo(
         imageRef.current,
         { clipPath: "inset(0 100% 0 0)" },
         {
@@ -91,6 +99,11 @@ export function IndustriesSectionNew() {
             trigger: imageRef.current,
             start: "top 75%",
             toggleActions: "play none none none",
+            onEnter: () => {
+              if (imageRef.current && !imageRef.current.hasAttribute("data-animated")) {
+                imageRef.current.setAttribute("data-animated", "true")
+              }
+            },
           },
         }
       )
@@ -112,7 +125,12 @@ export function IndustriesSectionNew() {
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      ScrollTrigger.getAll().forEach((trigger) => {
+        const triggerEl = trigger.vars?.trigger
+        if (triggerEl === sectionRef.current || triggerEl === imageRef.current || triggerEl === contentRef.current) {
+          trigger.kill()
+        }
+      })
     }
   }, [shouldReduceMotion])
 

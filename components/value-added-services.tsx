@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 
 const services = [
   {
@@ -30,13 +30,20 @@ const services = [
 function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true)
+    }
+  }, [isInView, hasAnimated])
 
   return (
     <motion.div
       ref={ref}
       className={`relative p-8 md:p-12 overflow-hidden group cursor-pointer flex-1`}
       initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{
         duration: 0.8,
         delay: index * 0.2,
@@ -77,7 +84,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         <motion.h3
           className={`text-3xl md:text-4xl font-bold mb-6 ${service.textColor}`}
           initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+          animate={hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
           transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }}
         >
           {service.title}
@@ -86,7 +93,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         <motion.p
           className={`text-lg md:text-xl leading-relaxed ${service.textColor} opacity-90`}
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 0.9 } : { opacity: 0 }}
+          animate={hasAnimated ? { opacity: 0.9 } : { opacity: 0 }}
           transition={{ duration: 0.6, delay: index * 0.2 + 0.5 }}
         >
           {service.description}
@@ -100,7 +107,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             borderLeft: "none",
           }}
           initial={{ scale: 0, rotate: -45 }}
-          animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -45 }}
+          animate={hasAnimated ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -45 }}
           transition={{ duration: 0.6, delay: index * 0.2 + 0.7 }}
         />
       </div>
@@ -111,6 +118,13 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 export function ValueAddedServices() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-50px" })
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true)
+    }
+  }, [isInView, hasAnimated])
 
   return (
     <section ref={ref} className="py-16 bg-gray-50">
@@ -119,13 +133,13 @@ export function ValueAddedServices() {
         <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
         >
           <motion.h2
             className="text-4xl md:text-5xl font-bold mb-6"
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            animate={hasAnimated ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             VALUE ADDED SERVICES
@@ -134,7 +148,7 @@ export function ValueAddedServices() {
           <motion.p
             className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            animate={hasAnimated ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             To us, waste is a resource; we call it "dirty gold" that needs to be treated and refined. We are willing to
