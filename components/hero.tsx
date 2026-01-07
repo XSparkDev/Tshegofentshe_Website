@@ -39,7 +39,7 @@ const HERO_SLIDES: {
     headingTop: "WELCOME",
     headingMain: "Tshegofentse Academy",
     description:
-      "Tshegofentse Academy providing \"Occupation Directed Training\" with Results. Results being Productivity, Motivated staff, Customer satisfaction and Succession planning.",
+      'Tshegofentse Academy providing "Occupation Directed Training" with Results. Results being Productivity, Motivated staff, Customer satisfaction and Succession planning.',
     buttonLabel: "Learn More",
     buttonHref: "https://tshegofentse-academy.co.za",
     durationMs: 4000,
@@ -100,7 +100,7 @@ export function Hero() {
 
       <div className="container mx-auto px-4 md:px-6 relative z-10 h-full flex flex-col">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 flex-1">
-          <div className="max-w-5xl text-left flex-1 mt-[calc(2rem-5cm)] md:mt-[4cm] relative">
+          <div className="max-w-5xl text-left flex-1 mt-12 md:mt-[4cm] mb-20 md:mb-0 relative -translate-y-[2cm] md:translate-y-0">
             <div className="space-y-6">
               <motion.h1
                 key={`heading-${currentIndex}`}
@@ -168,72 +168,71 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-4 md:bottom-[3cm] left-0 right-0 z-10">
+      <div className="absolute bottom-8 md:bottom-[3cm] left-0 right-0 z-10">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6">
             <div className="max-w-5xl w-full md:w-auto">
               <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-4">
-              {currentSlide.buttonHref.startsWith("http") ? (
-                <a
-                  href={currentSlide.buttonHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-[280px] md:w-auto order-3 md:order-none"
-                >
-                  <Button
-                    size="lg"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
-                  >
-                    {currentSlide.buttonLabel}
-                    <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
-                  </Button>
-                </a>
-              ) : (
-                <Link
-                  href={currentSlide.buttonHref}
-                  className="inline-flex w-[280px] md:w-auto order-3 md:order-none"
-                >
-                  <Button
-                    size="lg"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
-                  >
-                    {currentSlide.buttonLabel}
-                    <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
-                  </Button>
-                </Link>
-              )}
-              
-              {/* Lab and Academy buttons - only show on management slide */}
-              {currentSlide.key === "management" && (
-                <>
+                {/* Lab and Academy buttons - only show on management slide */}
+                {currentSlide.key === "management" && (
+                  <>
+                    <a
+                      href="https://vaalwaterlab.co.za"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-[280px] md:w-auto order-1 md:order-none"
+                    >
+                      <Button
+                        size="lg"
+                        className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
+                      >
+                        Lab
+                      </Button>
+                    </a>
+                    <a
+                      href="https://tshegofentse-academy.co.za"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-[280px] md:w-auto order-2 md:order-none"
+                    >
+                      <Button
+                        size="lg"
+                        className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
+                      >
+                        Academy
+                      </Button>
+                    </a>
+                  </>
+                )}
+                {currentSlide.buttonHref.startsWith("http") ? (
                   <a
-                    href="https://vaalwaterlab.co.za"
+                    href={currentSlide.buttonHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-[280px] md:w-auto order-1 md:order-none"
+                    className="inline-flex w-[280px] md:w-auto order-3 md:order-none"
                   >
                     <Button
                       size="lg"
-                      className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
                     >
-                      Lab
+                      {currentSlide.buttonLabel}
+                      <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
                     </Button>
                   </a>
-                  <a
-                    href="https://tshegofentse-academy.co.za"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-[280px] md:w-auto order-2 md:order-none"
+                ) : (
+                  <Link
+                    href={currentSlide.buttonHref}
+                    className="inline-flex w-[280px] md:w-auto order-3 md:order-none"
                   >
                     <Button
                       size="lg"
-                      className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
                     >
-                      Academy
+                      {currentSlide.buttonLabel}
+                      <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
                     </Button>
-                  </a>
-                </>
-              )}
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -263,3 +262,4 @@ export function Hero() {
     </motion.section>
   )
 }
+ 

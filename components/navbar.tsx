@@ -55,8 +55,8 @@ export function Navbar() {
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "shadow-md" : ""} bg-background`}
       >
         <div className="container mx-auto px-4 md:px-6 py-0 flex items-center justify-between gap-4 md:gap-8">
-          <Link href="/" className="flex items-center group flex-shrink md:flex-shrink-0 h-16 md:h-20 overflow-hidden">
-            <div className="relative h-48 w-96 md:h-56 md:w-[28rem] -my-16 md:-my-18">
+          <Link href="/" className="flex items-center group flex-shrink-0 h-16 md:h-20 overflow-hidden">
+            <div className="relative h-48 w-64 md:h-56 md:w-[28rem] -my-16 md:-my-18">
               <Image
                 src="/ChatGPT Image Dec 2, 2025, 02_30_12 PM.png"
                 alt="Tshegofentse Facilities & Engineering logo"
@@ -68,7 +68,7 @@ export function Navbar() {
           </Link>
 
           {/* Navigation Links - Desktop */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center px-2 lg:px-4">
+          <div className="hidden md:flex items-center gap-6 xl:gap-8 flex-1 justify-center px-2 lg:px-4">
             {navLinks.map((link, index) => (
               <React.Fragment key={link.name}>
                 <Link
@@ -102,20 +102,17 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
+          {/* Mobile Menu Button - Only visible on screens <= 768px */}
+          <div className="md:hidden flex items-center flex-shrink-0 z-50 relative ml-auto">
             {isMounted ? (
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
                   <button
-                    className="p-2 text-foreground hover:text-primary transition-colors"
-                    aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                    className="p-3 text-foreground hover:text-primary hover:bg-muted/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md active:scale-95 bg-background shadow-sm"
+                    aria-label="Open menu"
+                    type="button"
                   >
-                    <div className="flex flex-col justify-between w-6 h-4">
-                      <span className="block h-[2px] w-full rounded-full bg-current" />
-                      <span className="block h-[2px] w-full rounded-full bg-current" />
-                      <span className="block h-[2px] w-full rounded-full bg-current" />
-                    </div>
+                    <Menu className="h-7 w-7" strokeWidth={2.5} />
                   </button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 flex flex-col">
@@ -200,20 +197,17 @@ export function Navbar() {
               </Sheet>
             ) : (
               <button
-                className="p-2 text-foreground hover:text-primary transition-colors"
+                className="p-3 text-foreground hover:text-primary hover:bg-muted/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md active:scale-95 bg-background shadow-sm"
                 aria-label="Open menu"
+                type="button"
               >
-                <div className="flex flex-col justify-between w-6 h-4">
-                  <span className="block h-[2px] w-full rounded-full bg-current" />
-                  <span className="block h-[2px] w-full rounded-full bg-current" />
-                  <span className="block h-[2px] w-full rounded-full bg-current" />
-                </div>
+                <Menu className="h-7 w-7" strokeWidth={2.5} />
               </button>
             )}
           </div>
 
           {/* Social Icons - Desktop Only */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-5 flex-shrink-0">
+          <div className="hidden md:flex items-center gap-4 xl:gap-5 flex-shrink-0">
             <a href="https://web.facebook.com/tshegofentseza/?_rdc=1&_rdr#" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -243,28 +237,28 @@ export function Navbar() {
 
       <div className="bg-foreground text-background py-2">
         <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 items-center gap-4">
-          <div className="flex flex-row items-center gap-3 md:gap-3 justify-start md:justify-start text-center md:text-left">
-            <div className="bg-primary rounded-full p-3 ml-6 md:ml-0">
+          <div className="flex items-center gap-3 justify-start md:justify-start">
+            <div className="bg-primary rounded-full p-3 flex-shrink-0 w-[44px] md:w-auto">
               <Phone className="h-5 w-5 text-primary-foreground" />
             </div>
-            <div>
+            <div className="text-left">
               <div className="text-lg font-bold">082 549 6063 | 061 513 7249</div>
               <div className="text-xs text-background/70">Contact Us Anytime</div>
             </div>
           </div>
 
-          <div className="flex flex-row items-center gap-3 md:gap-3 justify-start md:justify-center text-center md:text-left">
-            <div className="bg-primary rounded-full p-3 ml-6 md:ml-0">
+          <div className="flex items-center gap-3 justify-start md:justify-center">
+            <div className="bg-primary rounded-full p-3 flex-shrink-0 w-[44px] md:w-auto">
               <Clock className="h-5 w-5 text-primary-foreground" />
             </div>
-            <div>
+            <div className="text-left md:text-left">
               <div className="text-lg font-bold">Open Hours</div>
               <div className="text-xs text-background/70">Weekdays 8:00-18:00, Sat: Closed</div>
             </div>
           </div>
 
-          <Link href="#contact" className="flex justify-center md:justify-end w-full md:w-auto">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-[90%] max-w-sm md:w-auto px-6 md:px-8 py-3 md:py-6 text-sm md:text-base font-medium text-center">
+          <Link href="#contact" className="justify-self-start md:justify-self-end">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-6 text-base font-medium">
               SCHEDULE A PICKUP
             </Button>
           </Link>
