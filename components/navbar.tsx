@@ -58,7 +58,7 @@ export function Navbar() {
           <Link href="/" className="flex items-center group flex-shrink-0 h-16 md:h-20 overflow-hidden">
             <div className="relative h-48 w-64 md:h-56 md:w-[28rem] -my-16 md:-my-18">
               <Image
-                src="/ChatGPT Image Dec 2, 2025, 02_30_12 PM.png"
+                src="/cht image.png"
                 alt="Tshegofentse Facilities & Engineering logo"
                 fill
                 className="object-contain"
