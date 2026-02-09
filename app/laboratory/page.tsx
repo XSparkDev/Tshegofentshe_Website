@@ -16,7 +16,6 @@ export default function LaboratoryPage() {
 
   const baseTransition = {
     duration: shouldReduceMotion ? 0 : 0.8,
-    ease: "easeOut",
   }
 
   return (
@@ -43,7 +42,7 @@ export default function LaboratoryPage() {
               className="mx-auto mb-12 h-1 w-24 rounded-full bg-gradient-to-r from-primary via-emerald-400 to-sky-400"
               initial={shouldReduceMotion ? undefined : { scaleX: 0, opacity: 0 }}
               animate={shouldReduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             />
 
             {/* Introduction Section */}
@@ -60,7 +59,7 @@ export default function LaboratoryPage() {
                 initial={shouldReduceMotion ? undefined : { scaleX: 0, opacity: 0 }}
                 whileInView={shouldReduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.6 }}
               />
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                 Tshegofentse offers comprehensive in-house analytical services through our state-of-the-art laboratory facility. 
@@ -83,13 +82,13 @@ export default function LaboratoryPage() {
               transition={baseTransition}
             >
               <h2 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">Our Testing Capabilities</h2>
-              <motion.div
-                className="h-1 w-32 rounded-full bg-gradient-to-r from-primary to-sky-400 mb-6"
-                initial={shouldReduceMotion ? undefined : { scaleX: 0, opacity: 0 }}
-                whileInView={shouldReduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-              />
+            <motion.div
+              className="h-1 w-32 rounded-full bg-gradient-to-r from-primary to-sky-400 mb-6"
+              initial={shouldReduceMotion ? undefined : { scaleX: 0, opacity: 0 }}
+              whileInView={shouldReduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+            />
               <div className="grid md:grid-cols-2 gap-6">
                 <motion.div
                   className="flex items-start gap-4"
@@ -572,7 +571,7 @@ export default function LaboratoryPage() {
                 initial={shouldReduceMotion ? undefined : { scaleX: 0, opacity: 0 }}
                 whileInView={shouldReduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.6 }}
               />
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Our laboratory is equipped with modern analytical instruments and staffed by qualified technicians 
@@ -586,7 +585,7 @@ export default function LaboratoryPage() {
                 initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
                 whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.6 }}
               >
                 <div className="border-l-4 border-primary pl-6 py-4">
                   <h3 className="font-bold text-xl mb-2 text-foreground">Advanced Analytical Instruments</h3>
@@ -623,7 +622,7 @@ export default function LaboratoryPage() {
                 initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
                 whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <h3 className="font-bold text-xl mb-4 text-foreground">Internal Analysis Capabilities</h3>
                 <div className="space-y-3">
@@ -669,7 +668,7 @@ export default function LaboratoryPage() {
                 initial={shouldReduceMotion ? undefined : { scaleX: 0, opacity: 0 }}
                 whileInView={shouldReduceMotion ? undefined : { scaleX: 1, opacity: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.6 }}
               />
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                 Our laboratory is conveniently located in <strong className="text-foreground">Bedworthpark, Vereeniging</strong>, 
