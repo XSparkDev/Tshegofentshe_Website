@@ -3,7 +3,7 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { motion, useReducedMotion } from "framer-motion"
-import { CheckCircle2, FlaskConical, Droplets, TestTube, GraduationCap, Award, BookOpen } from "lucide-react"
+import { CheckCircle2, FlaskConical, Droplets, TestTube, GraduationCap, Award, BookOpen, ExternalLink } from "lucide-react"
 import Image from "next/image"
 
 export default function LaboratoryPage() {
@@ -671,12 +671,48 @@ export default function LaboratoryPage() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               />
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                 Our laboratory is conveniently located in <strong className="text-foreground">Bedworthpark, Vereeniging</strong>, 
                 making it easily accessible for clients throughout the region. We welcome both companies and individuals 
                 seeking reliable analytical services. For inquiries about our testing capabilities or to schedule a consultation, 
                 please contact us through our standard channels.
               </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                For a full overview of laboratory services, certifications, and sample submission guidelines, you can also
+                visit our dedicated laboratory site, Vaal Water Lab.
+              </p>
+            </motion.section>
+
+            {/* External Laboratory Website CTA */}
+            <motion.section
+              className="mb-16"
+              initial={shouldReduceMotion ? undefined : itemVariants.hidden}
+              whileInView={shouldReduceMotion ? undefined : itemVariants.visible}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={baseTransition}
+            >
+              <div className="flex flex-col sm:flex-row items-center gap-4 justify-between rounded-xl border border-border/60 bg-muted/40 px-6 py-5">
+                <div className="text-center sm:text-left">
+                  <h3 className="text-xl font-bold text-foreground mb-1">Visit Vaal Water Lab</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Explore our dedicated laboratory website for detailed information on methods, pricing, and sample logistics.
+                  </p>
+                </div>
+                <a
+                  href="https://vaalwaterlab.co.za/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex"
+                >
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-medium hover:bg-primary/90 transition-colors"
+                  >
+                    vaalwaterlab.co.za
+                    <ExternalLink className="h-4 w-4" />
+                  </button>
+                </a>
+              </div>
             </motion.section>
           </div>
         </div>

@@ -3,7 +3,18 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { motion, useReducedMotion } from "framer-motion"
-import { CheckCircle2, GraduationCap, Users, BookOpen, ExternalLink, Target, TrendingUp, Lightbulb } from "lucide-react"
+import {
+  CheckCircle2,
+  GraduationCap,
+  Users,
+  BookOpen,
+  ExternalLink,
+  Target,
+  TrendingUp,
+  Lightbulb,
+  Linkedin,
+  Facebook,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function TrainingPage() {
@@ -304,9 +315,9 @@ export default function TrainingPage() {
               </p>
             </motion.section>
 
-            {/* Learn More Button */}
+            {/* Learn More Button + Social Links */}
             <motion.div
-              className="flex justify-center mb-16"
+              className="flex flex-col items-center gap-4 mb-16"
               initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
               animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 1.5 }}
@@ -325,6 +336,30 @@ export default function TrainingPage() {
                   <ExternalLink className="h-4 w-4" />
                 </Button>
               </a>
+
+              <div className="flex flex-col items-center gap-1 text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">Connect with Tshegofentse Training Academy</span>
+                <div className="flex items-center gap-4">
+                  <a
+                    href="https://www.linkedin.com/company/tshegofentse-training-academy/?originalSubdomain=za"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                    <span className="hidden sm:inline">LinkedIn</span>
+                  </a>
+                  <a
+                    href="https://www.facebook.com/tshegofentsetraining"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+                  >
+                    <Facebook className="h-4 w-4" />
+                    <span className="hidden sm:inline">Facebook</span>
+                  </a>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>

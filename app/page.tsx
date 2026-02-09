@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
+import { AccreditationStrip } from "@/components/accreditation-strip"
 import { WasteStrategy } from "@/components/waste-strategy"
 import { ServicesSectionNew } from "@/components/services-section-new"
 import { IndustriesSectionNew } from "@/components/industries-section-new"
@@ -36,6 +37,7 @@ export default function Home() {
     <main className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <Navbar />
       <Hero />
+      <AccreditationStrip variant="large" />
       <WasteStrategy />
       <StepwiseProcess />
       <ServicesSectionNew />

@@ -4,20 +4,40 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { useRef, useState } from "react"
 import { MapPin, Navigation, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
-const LOCATION = {
-  address: "20 Fortuna Ave, Bedworthpark, Vereeniging, South Africa",
-  companyName: "Tshegofentse Hazardous Waste & Analytical Services",
-  lat: -26.6736,
-  lng: 27.9269,
-  googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=20+Fortuna+Ave,+Bedworthpark,+Vereeniging,+South+Africa",
-  embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3579.5!2d27.9269!3d-26.6736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDQwJzI1LjAiUyAyN8KwNTUnMzYuOCJF!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus",
-}
+const LOCATIONS = [
+  {
+    id: 1,
+    name: "Tshegofentse Hazardous Waste & Analytical Services",
+    address: "20 Fortuna Ave, Bedworthpark, Vereeniging, South Africa",
+    lat: -26.6736,
+    lng: 27.9269,
+  },
+  {
+    id: 2,
+    name: "Van Till Road Alrode Transnet Dry Dock Alberton",
+    address: "Van Till Road Alrode Transnet Dry Dock, Alberton, South Africa",
+    lat: -26.3025,
+    lng: 28.139445,
+  },
+  {
+    id: 3,
+    name: "Foreshore Duncan Dock Waterfront Cape Town",
+    address: "Foreshore Duncan Dock Waterfront, Cape Town, South Africa",
+    lat: -33.912181,
+    lng: 18.426997,
+  },
+]
 
 export function InteractiveMap() {
   const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
   const [isHovered, setIsHovered] = useState(false)
+  const [selectedLocationId, setSelectedLocationId] = useState(1)
+  
+  const selectedLocation = LOCATIONS.find(loc => loc.id === selectedLocationId) || LOCATIONS[0]
+  const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(selectedLocation.address)}`
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -77,7 +97,8 @@ export function InteractiveMap() {
         onMouseLeave={() => setIsHovered(false)}
       >
         <motion.iframe
-          src={`https://maps.google.com/maps?q=${encodeURIComponent(LOCATION.address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+          key={selectedLocationId}
+          src={`https://maps.google.com/maps?q=${selectedLocation.lat},${selectedLocation.lng}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
           width="100%"
           height="100%"
           style={{ border: 0 }}
@@ -101,94 +122,103 @@ export function InteractiveMap() {
         transition={{ duration: 0.8 }}
       />
 
-      {/* Floating Company Info Card */}
+      {/* Bottom sheet-style place card with tabs (non-floating, scoped to map section) */}
       <motion.div
-        className="absolute top-8 left-4 md:left-8 z-30 pointer-events-auto"
-        initial={shouldReduceMotion ? undefined : { x: -100, opacity: 0 }}
-        whileInView={shouldReduceMotion ? undefined : { x: 0, opacity: 1 }}
+        className="absolute bottom-0 left-0 right-0 z-30 pointer-events-auto"
+        initial={shouldReduceMotion ? undefined : { y: 100, opacity: 0 }}
+        whileInView={shouldReduceMotion ? undefined : { y: 0, opacity: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
       >
-        <div className="bg-background/95 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-[#a4d233]/20 max-w-sm">
-          <motion.div
-            className="flex items-start gap-3 mb-4"
-            animate={{
-              y: [0, -5, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <div className="p-2 bg-[#a4d233]/20 rounded-lg">
-              <MapPin className="h-6 w-6 text-[#a4d233]" />
-            </div>
-            <div>
-              <h3 className="font-bold text-lg text-foreground mb-1">
-                {LOCATION.companyName}
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {LOCATION.address}
-              </p>
-            </div>
-          </motion.div>
+        <div className="bg-background/95 backdrop-blur-md rounded-t-xl shadow-2xl border-t border-[#a4d233]/20 max-h-[50vh] overflow-y-auto">
+          {/* Tabs directly above the place card content */}
+          <div className="flex border-b border-border/30">
+            {LOCATIONS.map((location) => (
+              <button
+                key={location.id}
+                onClick={() => setSelectedLocationId(location.id)}
+                className={cn(
+                  "flex-1 px-2 md:px-4 py-3 text-xs md:text-sm font-medium transition-colors border-b-2",
+                  selectedLocationId === location.id
+                    ? "border-[#a4d233] text-[#a4d233] bg-[#a4d233]/5"
+                    : "border-transparent text-muted-foreground hover:text-foreground hover:bg-background/50",
+                )}
+              >
+                <span className="line-clamp-1">{location.name}</span>
+              </button>
+            ))}
+          </div>
 
-          {/* Pulsing Location Pin */}
-          <div className="relative flex items-center gap-2">
+          {/* Place card content */}
+          <div className="p-6">
             <motion.div
-              className="absolute left-0 w-3 h-3 bg-[#a4d233] rounded-full"
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [1, 0.5, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="absolute left-0 w-3 h-3 bg-[#a4d233] rounded-full"
-              animate={{
-                scale: [1, 2, 1],
-                opacity: [0.5, 0, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
-            />
-            <span className="ml-4 text-xs text-muted-foreground">Live Location</span>
+              key={selectedLocationId}
+              className="flex items-start gap-3 mb-4"
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="p-2 bg-[#a4d233]/20 rounded-lg flex-shrink-0">
+                <MapPin className="h-6 w-6 text-[#a4d233]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-lg text-foreground mb-1">
+                  {selectedLocation.name}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {selectedLocation.address}
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Live Location indicator */}
+            <div className="relative flex items-center gap-2 mb-4">
+              <motion.div
+                className="absolute left-0 w-3 h-3 bg-[#a4d233] rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [1, 0.5, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute left-0 w-3 h-3 bg-[#a4d233] rounded-full"
+                animate={{
+                  scale: [1, 2, 1],
+                  opacity: [0.5, 0, 0.5],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5,
+                }}
+              />
+              <span className="ml-4 text-xs text-muted-foreground">Live Location</span>
+            </div>
+
+            {/* In-card Get Directions button */}
+            <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="block">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  size="lg"
+                  className="w-full bg-[#a4d233] hover:bg-[#a4d233]/90 text-foreground rounded-full px-6 py-6 shadow-lg border-2 border-[#a4d233]/50"
+                >
+                  <Navigation className="mr-2 h-5 w-5" />
+                  Get Directions
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+              </motion.div>
+            </a>
           </div>
         </div>
-      </motion.div>
-
-      {/* Get Directions Button */}
-      <motion.div
-        className="absolute bottom-8 right-4 md:right-8 z-30 pointer-events-auto"
-        initial={shouldReduceMotion ? undefined : { x: 100, opacity: 0 }}
-        whileInView={shouldReduceMotion ? undefined : { x: 0, opacity: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-      >
-        <a href={LOCATION.googleMapsUrl} target="_blank" rel="noopener noreferrer">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Button
-              size="lg"
-              className="bg-[#a4d233] hover:bg-[#a4d233]/90 text-foreground rounded-full px-6 py-6 shadow-xl border-2 border-[#a4d233]/50"
-            >
-              <Navigation className="mr-2 h-5 w-5" />
-              Get Directions
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </Button>
-          </motion.div>
-        </a>
       </motion.div>
 
       {/* Animated Direction Lines */}
