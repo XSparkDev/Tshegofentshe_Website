@@ -47,8 +47,8 @@ export default function Home() {
       <ValueAddedServices />
       <ComplianceSection />
       <ContactSection />
-      <InteractiveMap />
       <AccreditationStrip variant="large" />
+      <InteractiveMap />
       <Footer />
     </main>
   )
