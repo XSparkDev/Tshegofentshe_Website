@@ -48,6 +48,7 @@ export default function Home() {
       <ComplianceSection />
       <ContactSection />
       <InteractiveMap />
+      <AccreditationStrip variant="large" />
       <Footer />
     </main>
   )

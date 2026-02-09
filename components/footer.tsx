@@ -178,10 +178,7 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Accreditation strip near contact details */}
-            <div className="pt-4">
-              <AccreditationStrip variant="small" />
-            </div>
+            
           </div>
 
           {/* Right: Newsletter */}
