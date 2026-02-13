@@ -157,7 +157,7 @@ export function Hero() {
           >
             <div className="relative w-[640px] h-[640px] md:w-[800px] md:h-[800px] mx-auto md:mx-0">
               <Image
-                src="/Tshegofentse final logo-03.png"
+                src="/Timage.png"
                 alt="Tshegofentse Logo"
                 fill
                 className="object-contain"
