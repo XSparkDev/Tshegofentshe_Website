@@ -22,7 +22,7 @@ const HERO_SLIDES: {
 }[] = [
   {
     key: "management",
-    imageSrc: "/nature-landscape-forest-clean-water2.jpg",
+    imageSrc: "/dirty.jpg",
     imageAlt: "Sustainable Environment",
     headingTop: "Hazardous Waste",
     headingMain: "Management",
@@ -200,7 +200,7 @@ export function Hero() {
           </div>
 
           <motion.div
-            className="relative hidden md:block md:flex-shrink-0"
+            className="relative hidden xl:block md:flex-shrink-0"
             initial={shouldReduceMotion ? undefined : { opacity: 0, x: 40 }}
             animate={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
             transition={shouldReduceMotion ? undefined : { duration: 0.8, ease: "easeOut", delay: 0.4 }}
