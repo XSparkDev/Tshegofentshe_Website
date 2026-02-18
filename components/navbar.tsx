@@ -61,26 +61,26 @@ export function Navbar() {
                 src="/cht image.png"
                 alt="Tshegofentse Facilities & Engineering logo"
                 fill
-                className="object-contain"
+                className="object-contain object-left"
                 priority
               />
             </div>
           </Link>
 
           {/* Navigation Links - Desktop */}
-          <div className="hidden md:flex items-center gap-6 xl:gap-8 flex-1 justify-center px-2 lg:px-4">
+          <div className="hidden xl:flex items-center xl:gap-4 2xl:gap-8 flex-1 min-w-0 justify-center px-2 lg:px-4 flex-shrink">
             {navLinks.map((link, index) => (
               <React.Fragment key={link.name}>
                 <Link
                   href={link.href}
-                  className="text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-wide whitespace-nowrap"
+                  className="text-xs xl:text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-tight 2xl:tracking-wide whitespace-nowrap flex-shrink-0"
                 >
                   {link.name}
                 </Link>
                 {index === 0 && isMounted && (
                   /* Services Dropdown */
                   <DropdownMenu>
-                    <DropdownMenuTrigger className="text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-wide whitespace-nowrap flex items-center gap-1 outline-none">
+                    <DropdownMenuTrigger className="text-xs xl:text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-tight 2xl:tracking-wide whitespace-nowrap flex items-center gap-1 outline-none flex-shrink-0">
                       Services
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuTrigger>
@@ -102,8 +102,8 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button - Only visible on screens <= 768px */}
-          <div className="md:hidden flex items-center flex-shrink-0 z-50 relative ml-auto">
+          {/* Mobile Menu Button - visible when desktop nav is hidden (< xl) */}
+          <div className="xl:hidden flex items-center flex-shrink-0 z-50 relative ml-auto">
             {isMounted ? (
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
@@ -207,7 +207,7 @@ export function Navbar() {
           </div>
 
           {/* Social Icons - Desktop Only */}
-          <div className="hidden md:flex items-center gap-4 xl:gap-5 flex-shrink-0">
+          <div className="hidden xl:flex items-center gap-4 xl:gap-5 flex-shrink-0">
             <a href="https://web.facebook.com/tshegofentseza/?_rdc=1&_rdr#" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />

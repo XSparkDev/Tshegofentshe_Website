@@ -49,7 +49,7 @@ const HERO_SLIDES: {
     imageSrc: "/lab.png",
     imageAlt: "Tshegofentse Water Testing Laboratory",
     headingTop: "We Are Committed to Your Health",
-    headingMain: "Tshegofentse Water Testing Laboratory",
+    headingMain: "Tshegofentse\nWater Testing Laboratory",
     description:
       "Waterways are polluted, water is expensive, yet we know it's life.\nTshegofentse Water Testing Laboratory – Your Water testing Specialist.",
     buttonLabel: "View our Lab",
@@ -102,50 +102,100 @@ export function Hero() {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 flex-1">
           <div className="max-w-5xl text-left flex-1 mt-12 md:mt-[4cm] mb-20 md:mb-0 relative -translate-y-[2cm] md:translate-y-0">
             <div className="space-y-6">
-              <motion.h1
-                key={`heading-${currentIndex}`}
-                className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight text-background"
-                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-                animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                transition={
-                  shouldReduceMotion
-                    ? undefined
-                    : { duration: 0.8, ease: "easeOut", staggerChildren: 0.15 }
-                }
-              >
-                <motion.span
-                  className="block text-lg md:text-2xl font-normal mb-2 text-background"
-                  initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
-                  animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
-                >
-                  {currentSlide.headingTop}
-                </motion.span>
-                <motion.span
-                  className="block text-background"
-                  initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
-                  animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  transition={
-                    shouldReduceMotion ? undefined : { duration: 0.6, ease: "easeOut", delay: 0.15 }
-                  }
-                >
-                  {currentSlide.headingMain}
-                </motion.span>
-              </motion.h1>
+              {currentSlide.key === "lab" ? (
+                <>
+                  <motion.span
+                    key={`lab-line1-${currentIndex}`}
+                    className="block text-lg md:text-2xl font-normal mb-2 text-background"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
+                  >
+                    Tshegofentse
+                  </motion.span>
+                  <motion.span
+                    key={`lab-line2-${currentIndex}`}
+                    className="block text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight text-background"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                  >
+                    <span className="whitespace-nowrap">Water Testing</span>{" "}Laboratory
+                  </motion.span>
+                  <motion.span
+                    key={`lab-line3-${currentIndex}`}
+                    className="block text-lg md:text-2xl font-normal mb-2 text-background"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut", delay: 0.15 }}
+                  >
+                    We Are Committed to Your Health
+                  </motion.span>
+                  <motion.p
+                    key={`description-${currentIndex}`}
+                    className="text-lg md:text-xl text-background/90 max-w-2xl leading-relaxed"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                  >
+                    {currentSlide.description.split("\n").map((line, index) => (
+                      <span key={index} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </motion.p>
+                </>
+              ) : (
+                <>
+                  <motion.h1
+                    key={`heading-${currentIndex}`}
+                    className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight text-background"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={
+                      shouldReduceMotion
+                        ? undefined
+                        : { duration: 0.8, ease: "easeOut", staggerChildren: 0.15 }
+                    }
+                  >
+                    <motion.span
+                      className="block text-lg md:text-2xl font-normal mb-2 text-background"
+                      initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                      animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                      transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
+                    >
+                      {currentSlide.headingTop}
+                    </motion.span>
+                    {currentSlide.headingMain.split("\n").map((line, i) => (
+                      <motion.span
+                        key={i}
+                        className="block text-background"
+                        initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                        animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={
+                          shouldReduceMotion ? undefined : { duration: 0.6, ease: "easeOut", delay: 0.15 }
+                        }
+                      >
+                        {line}
+                      </motion.span>
+                    ))}
+                  </motion.h1>
 
-              <motion.p
-                key={`description-${currentIndex}`}
-                className="text-lg md:text-xl text-background/90 max-w-2xl leading-relaxed"
-                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
-                animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                transition={shouldReduceMotion ? undefined : { duration: 0.7, ease: "easeOut", delay: 0.3 }}
-              >
-                {currentSlide.description.split("\n").map((line, index) => (
-                  <span key={index} className="block">
-                    {line}
-                  </span>
-                ))}
-              </motion.p>
+                  <motion.p
+                    key={`description-${currentIndex}`}
+                    className="text-lg md:text-xl text-background/90 max-w-2xl leading-relaxed"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                  >
+                    {currentSlide.description.split("\n").map((line, index) => (
+                      <span key={index} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </motion.p>
+                </>
+              )}
             </div>
           </div>
 
