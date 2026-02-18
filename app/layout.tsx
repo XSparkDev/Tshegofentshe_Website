@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Providing Effective Solutions To Address Today's Environmental Challenges.",
   icons: {
     icon: "/favicon.png",
-    apple: "/apple-icon.png",
+    apple: "/favicon.png",
   },
 }
 
