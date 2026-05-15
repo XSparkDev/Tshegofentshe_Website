@@ -1,0 +1,8 @@
+static_sites:
+  - name: tshegofentse-website
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./out
+    envVars:
+      - key: NODE_ENV
+        value: production
+

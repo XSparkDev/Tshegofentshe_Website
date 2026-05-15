@@ -22,7 +22,7 @@ const HERO_SLIDES: {
 }[] = [
   {
     key: "management",
-    imageSrc: "/nature-landscape-forest-clean-water2.jpg",
+    imageSrc: "/dirty.jpg",
     imageAlt: "Sustainable Environment",
     headingTop: "Hazardous Waste",
     headingMain: "Management",
@@ -39,7 +39,7 @@ const HERO_SLIDES: {
     headingTop: "WELCOME",
     headingMain: "Tshegofentse Academy",
     description:
-      "Tshegofentse Academy providing \"Occupation Directed Training\" with Results. Results being Productivity, Motivated staff, Customer satisfaction and Succession planning.",
+      'Tshegofentse Academy providing "Occupation Directed Training" with Results. Results being Productivity, Motivated staff, Customer satisfaction and Succession planning.',
     buttonLabel: "Learn More",
     buttonHref: "https://tshegofentse-academy.co.za",
     durationMs: 4000,
@@ -49,7 +49,7 @@ const HERO_SLIDES: {
     imageSrc: "/lab.png",
     imageAlt: "Tshegofentse Water Testing Laboratory",
     headingTop: "We Are Committed to Your Health",
-    headingMain: "Tshegofentse Water Testing Laboratory",
+    headingMain: "Tshegofentse\nWater Testing Laboratory",
     description:
       "Waterways are polluted, water is expensive, yet we know it's life.\nTshegofentse Water Testing Laboratory – Your Water testing Specialist.",
     buttonLabel: "View our Lab",
@@ -66,11 +66,11 @@ export function Hero() {
   const currentDuration = currentSlide.durationMs
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % HERO_SLIDES.length)
+    setCurrentIndex((prev: number) => (prev + 1) % HERO_SLIDES.length)
   }
 
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
+    setCurrentIndex((prev: number) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
   }
 
   useEffect(() => {
@@ -100,64 +100,114 @@ export function Hero() {
 
       <div className="container mx-auto px-4 md:px-6 relative z-10 h-full flex flex-col">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 flex-1">
-          <div className="max-w-5xl text-left flex-1 mt-[calc(2rem-1cm)] md:mt-[4cm] relative">
+          <div className="max-w-5xl text-left flex-1 mt-12 md:mt-[4cm] mb-20 md:mb-0 relative -translate-y-[2cm] md:translate-y-0">
             <div className="space-y-6">
-              <motion.h1
-                key={`heading-${currentIndex}`}
-                className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight text-background"
-                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-                animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                transition={
-                  shouldReduceMotion
-                    ? undefined
-                    : { duration: 0.8, ease: "easeOut", staggerChildren: 0.15 }
-                }
-              >
-                <motion.span
-                  className="block text-lg md:text-2xl font-normal mb-2 text-background"
-                  initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
-                  animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
-                >
-                  {currentSlide.headingTop}
-                </motion.span>
-                <motion.span
-                  className="block text-background"
-                  initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
-                  animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  transition={
-                    shouldReduceMotion ? undefined : { duration: 0.6, ease: "easeOut", delay: 0.15 }
-                  }
-                >
-                  {currentSlide.headingMain}
-                </motion.span>
-              </motion.h1>
+              {currentSlide.key === "lab" ? (
+                <>
+                  <motion.span
+                    key={`lab-line1-${currentIndex}`}
+                    className="block text-lg md:text-2xl font-normal mb-2 text-background"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
+                  >
+                    Tshegofentse
+                  </motion.span>
+                  <motion.span
+                    key={`lab-line2-${currentIndex}`}
+                    className="block text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight text-background"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                  >
+                    <span className="whitespace-nowrap">Water Testing</span>{" "}Laboratory
+                  </motion.span>
+                  <motion.span
+                    key={`lab-line3-${currentIndex}`}
+                    className="block text-lg md:text-2xl font-normal mb-2 text-background"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut", delay: 0.15 }}
+                  >
+                    We Are Committed to Your Health
+                  </motion.span>
+                  <motion.p
+                    key={`description-${currentIndex}`}
+                    className="text-lg md:text-xl text-background/90 max-w-2xl leading-relaxed"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                  >
+                    {currentSlide.description.split("\n").map((line, index) => (
+                      <span key={index} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </motion.p>
+                </>
+              ) : (
+                <>
+                  <motion.h1
+                    key={`heading-${currentIndex}`}
+                    className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight text-background"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={
+                      shouldReduceMotion
+                        ? undefined
+                        : { duration: 0.8, ease: "easeOut", staggerChildren: 0.15 }
+                    }
+                  >
+                    <motion.span
+                      className="block text-lg md:text-2xl font-normal mb-2 text-background"
+                      initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                      animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                      transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
+                    >
+                      {currentSlide.headingTop}
+                    </motion.span>
+                    {currentSlide.headingMain.split("\n").map((line, i) => (
+                      <motion.span
+                        key={i}
+                        className="block text-background"
+                        initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
+                        animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={
+                          shouldReduceMotion ? undefined : { duration: 0.6, ease: "easeOut", delay: 0.15 }
+                        }
+                      >
+                        {line}
+                      </motion.span>
+                    ))}
+                  </motion.h1>
 
-              <motion.p
-                key={`description-${currentIndex}`}
-                className="text-lg md:text-xl text-background/90 max-w-2xl leading-relaxed"
-                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
-                animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                transition={shouldReduceMotion ? undefined : { duration: 0.7, ease: "easeOut", delay: 0.3 }}
-              >
-                {currentSlide.description.split("\n").map((line, index) => (
-                  <span key={index} className="block">
-                    {line}
-                  </span>
-                ))}
-              </motion.p>
+                  <motion.p
+                    key={`description-${currentIndex}`}
+                    className="text-lg md:text-xl text-background/90 max-w-2xl leading-relaxed"
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
+                    animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                  >
+                    {currentSlide.description.split("\n").map((line, index) => (
+                      <span key={index} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </motion.p>
+                </>
+              )}
             </div>
           </div>
 
           <motion.div
-            className="relative hidden md:block md:flex-shrink-0"
+            className="relative hidden xl:block md:flex-shrink-0"
             initial={shouldReduceMotion ? undefined : { opacity: 0, x: 40 }}
             animate={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
             transition={shouldReduceMotion ? undefined : { duration: 0.8, ease: "easeOut", delay: 0.4 }}
           >
             <div className="relative w-[640px] h-[640px] md:w-[800px] md:h-[800px] mx-auto md:mx-0">
               <Image
-                src="/Tshegofentse final logo-03.png"
+                src="/Timage.png"
                 alt="Tshegofentse Logo"
                 fill
                 className="object-contain"
@@ -168,54 +218,71 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-4 md:bottom-[3cm] left-0 right-0 z-10">
+      <div className="absolute bottom-8 md:bottom-[3cm] left-0 right-0 z-10">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6">
             <div className="max-w-5xl w-full md:w-auto">
               <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-4">
-              {currentSlide.buttonHref.startsWith("http") ? (
-                <a href={currentSlide.buttonHref} target="_blank" rel="noopener noreferrer" className="inline-flex w-[280px] md:w-auto">
-                  <Button
-                    size="lg"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
+                {/* Lab and Academy buttons - only show on management slide */}
+                {currentSlide.key === "management" && (
+                  <>
+                    <a
+                      href="https://vaalwaterlab.co.za"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-[280px] md:w-auto order-1 md:order-none"
+                    >
+                      <Button
+                        size="lg"
+                        className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
+                      >
+                        Lab
+                      </Button>
+                    </a>
+                    <a
+                      href="https://tshegofentse-academy.co.za"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-[280px] md:w-auto order-2 md:order-none"
+                    >
+                      <Button
+                        size="lg"
+                        className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
+                      >
+                        Academy
+                      </Button>
+                    </a>
+                  </>
+                )}
+                {currentSlide.buttonHref.startsWith("http") ? (
+                  <a
+                    href={currentSlide.buttonHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-[280px] md:w-auto order-3 md:order-none"
                   >
-                    {currentSlide.buttonLabel}
-                    <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
-                  </Button>
-                </a>
-              ) : (
-                <Link href={currentSlide.buttonHref} className="inline-flex w-[280px] md:w-auto">
-                  <Button
-                    size="lg"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
-                  >
-                    {currentSlide.buttonLabel}
-                    <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
-                  </Button>
-                </Link>
-              )}
-              
-              {/* Lab and Academy buttons - only show on management slide */}
-              {currentSlide.key === "management" && (
-                <>
-                  <a href="https://vaalwaterlab.co.za" target="_blank" rel="noopener noreferrer" className="inline-flex w-[280px] md:w-auto">
                     <Button
                       size="lg"
-                      className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
                     >
-                      Lab
+                      {currentSlide.buttonLabel}
+                      <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
                     </Button>
                   </a>
-                  <a href="https://tshegofentse-academy.co.za" target="_blank" rel="noopener noreferrer" className="inline-flex w-[280px] md:w-auto">
+                ) : (
+                  <Link
+                    href={currentSlide.buttonHref}
+                    className="inline-flex w-[280px] md:w-auto order-3 md:order-none"
+                  >
                     <Button
                       size="lg"
-                      className="bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background border-2 border-background/50 rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium transition-all flex items-center justify-center whitespace-nowrap"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 h-12 min-h-[48px] w-full md:min-w-[140px] md:w-auto text-base font-medium animated-btn flex items-center justify-center whitespace-nowrap"
                     >
-                      Academy
+                      {currentSlide.buttonLabel}
+                      <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
                     </Button>
-                  </a>
-                </>
-              )}
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -225,7 +292,7 @@ export function Hero() {
       <button
         type="button"
         onClick={goToPrev}
-        className="absolute left-2 md:left-4 bottom-20 md:top-1/2 md:-translate-y-1/2 z-10 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background p-2 md:p-3 rounded-full transition-all"
+        className="absolute left-2 md:left-4 bottom-8 md:top-1/2 md:-translate-y-1/2 z-10 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background p-2 md:p-3 rounded-full transition-all"
         aria-label="Previous slide"
       >
         <svg className="h-5 w-5 md:h-6 md:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -235,7 +302,7 @@ export function Hero() {
       <button
         type="button"
         onClick={goToNext}
-        className="absolute right-2 md:right-4 bottom-20 md:top-1/2 md:-translate-y-1/2 z-10 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background p-2 md:p-3 rounded-full transition-all"
+        className="absolute right-2 md:right-4 bottom-8 md:top-1/2 md:-translate-y-1/2 z-10 bg-background/20 hover:bg-background/30 backdrop-blur-sm text-background p-2 md:p-3 rounded-full transition-all"
         aria-label="Next slide"
       >
         <svg className="h-5 w-5 md:h-6 md:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -245,3 +312,4 @@ export function Hero() {
     </motion.section>
   )
 }
+ 

@@ -3,26 +3,50 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { MapPin, Phone, Mail } from "lucide-react"
+import { MapPin, Phone, Mail, MessageCircle } from "lucide-react"
 import { motion, useReducedMotion } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { useInView } from "framer-motion"
 
 const contactInfoItems = [
   {
-    icon: Phone,
-    title: "Call Us",
-    details: ["082 549 6063", "061 513 7249"],
+    icon: Mail,
+    title: "Email",
+    details: ["sales@tshegofentse.co.za"],
   },
   {
-    icon: Mail,
-    title: "Email Us",
-    details: ["info@tshegofentse.co.za"],
+    icon: Phone,
+    title: "Medical Waste",
+    details: ["082 696 5298"],
+  },
+  {
+    icon: Phone,
+    title: "Hazardous Waste",
+    details: ["061 513 7249"],
+  },
+  {
+    icon: Phone,
+    title: "Training Academy",
+    details: ["081 273 2070"],
+  },
+  {
+    icon: Phone,
+    title: "Laboratory",
+    details: ["061 335 8281"],
+  },
+  {
+    icon: MessageCircle,
+    title: "WhatsApp",
+    details: ["064 533 5422"],
   },
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["20 Fortuna Ave, Bedworthpark", "Vereeniging, South Africa"],
+    details: [
+      "20 Fortuna Ave, Bedworthpark, Vereeniging",
+      "Van Till Road Alrode Transnet Dry Dock, Alberton",
+      "Foreshore Duncan Dock Waterfront, Cape Town",
+    ],
   },
 ]
 
@@ -30,6 +54,13 @@ export function ContactSection() {
   const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true)
+    }
+  }, [isInView, hasAnimated])
 
   return (
     <motion.section
@@ -37,9 +68,7 @@ export function ContactSection() {
       id="contact"
       className="py-20 bg-background"
       initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
-      animate={shouldReduceMotion || isInView ? undefined : { opacity: 0, y: 30 }}
-      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      animate={shouldReduceMotion || hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container mx-auto px-4 md:px-6">
@@ -58,9 +87,7 @@ export function ContactSection() {
                 key={item.title}
                 className="flex items-start gap-4"
                 initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-                animate={shouldReduceMotion || isInView ? undefined : { opacity: 0, y: 20 }}
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={shouldReduceMotion || hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{
                   duration: 0.4,
                   ease: "easeOut",
@@ -78,7 +105,25 @@ export function ContactSection() {
                   <h3 className="font-bold text-lg mb-1">{item.title}</h3>
                   {item.details.map((detail, detailIndex) => (
                     <p key={detailIndex} className="text-muted-foreground">
-                      {detail}
+                      {item.title === "WhatsApp" ? (
+                        <a 
+                          href="https://api.whatsapp.com/send/?phone=+270645335422&text=Hi!&app_absent=0"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline"
+                        >
+                          {detail}
+                        </a>
+                      ) : item.title === "Email" ? (
+                        <a 
+                          href={`mailto:${detail}`}
+                          className="text-primary hover:underline"
+                        >
+                          {detail}
+                        </a>
+                      ) : (
+                        detail
+                      )}
                     </p>
                   ))}
                 </div>
@@ -89,9 +134,7 @@ export function ContactSection() {
           <motion.div
             className="bg-muted/30 p-8 rounded-lg border border-border/50"
             initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-            animate={shouldReduceMotion || isInView ? undefined : { opacity: 0, y: 20 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={shouldReduceMotion || hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: shouldReduceMotion ? 0 : 0.2 }}
           >
             <form className="space-y-6">

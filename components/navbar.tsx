@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Phone, Clock, Menu, X } from "lucide-react"
+import { Phone, Clock, Menu, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -12,11 +12,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
+  const [isServicesExpanded, setIsServicesExpanded] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
@@ -30,10 +37,16 @@ export function Navbar() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
+    { name: "Lab", href: "/laboratory" },
+    { name: "Training", href: "/training" },
+    { name: "Industries", href: "/industries" },
+    { name: "Contacts", href: "/#contact" },
+  ]
+
+  const servicesSubItems = [
     { name: "Services", href: "/services" },
     { name: "Library", href: "/library" },
     { name: "Gallery", href: "/industries" },
-    { name: "Contacts", href: "/#contact" },
   ]
 
   return (
@@ -43,40 +56,63 @@ export function Navbar() {
       >
         <div className="container mx-auto px-4 md:px-6 py-0 flex items-center justify-between gap-4 md:gap-8">
           <Link href="/" className="flex items-center group flex-shrink-0 h-16 md:h-20 overflow-hidden">
-            <div className="relative h-48 w-96 md:h-56 md:w-[28rem] -my-16 md:-my-18">
+            <div className="relative h-48 w-64 md:h-56 md:w-[28rem] -my-16 md:-my-18">
               <Image
-                src="/ChatGPT Image Dec 2, 2025, 02_30_12 PM.png"
+                src="/cht image.png"
                 alt="Tshegofentse Facilities & Engineering logo"
                 fill
-                className="object-contain"
+                className="object-contain object-left"
                 priority
               />
             </div>
           </Link>
 
           {/* Navigation Links - Desktop */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center px-2 lg:px-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-wide whitespace-nowrap"
-              >
-                {link.name}
-              </Link>
+          <div className="hidden xl:flex items-center xl:gap-4 2xl:gap-8 flex-1 min-w-0 justify-center px-2 lg:px-4 flex-shrink">
+            {navLinks.map((link, index) => (
+              <React.Fragment key={link.name}>
+                <Link
+                  href={link.href}
+                  className="text-xs xl:text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-tight 2xl:tracking-wide whitespace-nowrap flex-shrink-0"
+                >
+                  {link.name}
+                </Link>
+                {index === 0 && isMounted && (
+                  /* Services Dropdown */
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="text-xs xl:text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-tight 2xl:tracking-wide whitespace-nowrap flex items-center gap-1 outline-none flex-shrink-0">
+                      Services
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="min-w-[150px] bg-white">
+                      {servicesSubItems.map((item) => (
+                        <DropdownMenuItem key={item.name} asChild>
+                          <Link
+                            href={item.href}
+                            className="w-full cursor-pointer uppercase tracking-wide"
+                          >
+                            {item.name}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
+              </React.Fragment>
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
+          {/* Mobile Menu Button - visible when desktop nav is hidden (< xl) */}
+          <div className="xl:hidden flex items-center flex-shrink-0 z-50 relative ml-auto">
             {isMounted ? (
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
                   <button
-                    className="p-2 text-foreground hover:text-primary transition-colors"
+                    className="p-3 text-foreground hover:text-primary hover:bg-muted/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md active:scale-95 bg-background shadow-sm"
                     aria-label="Open menu"
+                    type="button"
                   >
-                    <Menu className="h-6 w-6" />
+                    <Menu className="h-7 w-7" strokeWidth={2.5} />
                   </button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0 flex flex-col">
@@ -84,15 +120,47 @@ export function Navbar() {
                     <SheetTitle className="text-left text-xl font-bold text-foreground">Menu</SheetTitle>
                   </SheetHeader>
                   <nav className="flex flex-col flex-1 px-6 pt-4 pb-4">
-                    {navLinks.map((link) => (
-                      <Link
-                        key={link.name}
-                        href={link.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-base font-semibold text-foreground hover:text-primary transition-colors uppercase tracking-wide py-3 border-b border-border/30 last:border-b-0 active:bg-muted/50"
-                      >
-                        {link.name}
-                      </Link>
+                    {navLinks.map((link, index) => (
+                      <React.Fragment key={link.name}>
+                        <Link
+                          href={link.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="text-base font-semibold text-foreground hover:text-primary transition-colors uppercase tracking-wide py-3 border-b border-border/30 last:border-b-0 active:bg-muted/50"
+                        >
+                          {link.name}
+                        </Link>
+                        {index === 0 && (
+                          /* Services with Sub-items - Mobile */
+                          <div className="border-b border-border/30">
+                            <button
+                              onClick={() => setIsServicesExpanded(!isServicesExpanded)}
+                              className="w-full text-base font-semibold text-foreground hover:text-primary transition-colors uppercase tracking-wide py-3 flex items-center justify-between active:bg-muted/50"
+                            >
+                              Services
+                              <ChevronDown
+                                className={`h-4 w-4 transition-transform ${isServicesExpanded ? "rotate-180" : ""}`}
+                              />
+                            </button>
+                            {isServicesExpanded && (
+                              <div className="pl-4 pb-2">
+                                {servicesSubItems.map((item) => (
+                                  <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    onClick={() => {
+                                      setIsMobileMenuOpen(false)
+                                      setIsServicesExpanded(false)
+                                    }}
+                                    className="block text-sm font-medium text-foreground/80 hover:text-primary transition-colors uppercase tracking-wide py-2 border-b border-border/20 last:border-b-0 active:bg-muted/50"
+                                  >
+                                    {item.name}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </React.Fragment>
                     ))}
                   </nav>
                   
@@ -105,12 +173,12 @@ export function Navbar() {
                           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
                       </a>
-                      <a href="https://za.linkedin.com/company/tshegofentse-facilities-engineering" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5 hover:bg-muted/50 rounded-md">
+                      <a href="https://www.linkedin.com/company/tshegofentse-facilities-engineering/?originalSubdomain=za" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5 hover:bg-muted/50 rounded-md">
                         <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                         </svg>
                       </a>
-                      <a href="https://api.whatsapp.com/send/?phone=+270825496063&text=Hi!&app_absent=0" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5 hover:bg-muted/50 rounded-md">
+                      <a href="https://api.whatsapp.com/send/?phone=+270645335422&text=Hi!&app_absent=0" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5 hover:bg-muted/50 rounded-md">
                         <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                         </svg>
@@ -129,27 +197,28 @@ export function Navbar() {
               </Sheet>
             ) : (
               <button
-                className="p-2 text-foreground hover:text-primary transition-colors"
+                className="p-3 text-foreground hover:text-primary hover:bg-muted/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md active:scale-95 bg-background shadow-sm"
                 aria-label="Open menu"
+                type="button"
               >
-                <Menu className="h-6 w-6" />
+                <Menu className="h-7 w-7" strokeWidth={2.5} />
               </button>
             )}
           </div>
 
           {/* Social Icons - Desktop Only */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-5 flex-shrink-0">
+          <div className="hidden xl:flex items-center gap-4 xl:gap-5 flex-shrink-0">
             <a href="https://web.facebook.com/tshegofentseza/?_rdc=1&_rdr#" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
               </svg>
             </a>
-            <a href="https://za.linkedin.com/company/tshegofentse-facilities-engineering" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
+            <a href="https://www.linkedin.com/company/tshegofentse-facilities-engineering/?originalSubdomain=za" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
             </a>
-            <a href="https://api.whatsapp.com/send/?phone=+270825496063&text=Hi!&app_absent=0" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
+            <a href="https://api.whatsapp.com/send/?phone=+270645335422&text=Hi!&app_absent=0" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
               </svg>
@@ -168,28 +237,28 @@ export function Navbar() {
 
       <div className="bg-foreground text-background py-2">
         <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 items-center gap-4">
-          <div className="flex items-center gap-3 justify-start">
-            <div className="bg-primary rounded-full p-3">
+          <div className="flex items-center gap-3 justify-start md:justify-start w-[90%] md:w-auto mx-auto md:mx-0">
+            <div className="bg-primary rounded-full p-3 flex-shrink-0 w-[44px] md:w-auto">
               <Phone className="h-5 w-5 text-primary-foreground" />
             </div>
-            <div>
-              <div className="text-lg font-bold">082 549 6063 | 061 513 7249</div>
+            <div className="text-left">
+              <div className="text-lg font-bold">061 513 7249 | 082 696 5298</div>
               <div className="text-xs text-background/70">Contact Us Anytime</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 justify-center md:justify-center">
-            <div className="bg-primary rounded-full p-3">
+          <div className="flex items-center gap-3 justify-start md:justify-center w-[90%] md:w-auto mx-auto md:mx-0">
+            <div className="bg-primary rounded-full p-3 flex-shrink-0 w-[44px] md:w-auto">
               <Clock className="h-5 w-5 text-primary-foreground" />
             </div>
-            <div>
+            <div className="text-left md:text-left">
               <div className="text-lg font-bold">Open Hours</div>
               <div className="text-xs text-background/70">Weekdays 8:00-18:00, Sat: Closed</div>
             </div>
           </div>
 
-          <Link href="#contact" className="justify-self-end">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-6 text-base font-medium">
+          <Link href="#contact" className="justify-self-center md:justify-self-end w-full md:w-auto flex justify-center">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 md:px-8 py-6 text-base font-medium w-[90%] md:w-auto min-w-[300px] md:min-w-0">
               SCHEDULE A PICKUP
             </Button>
           </Link>

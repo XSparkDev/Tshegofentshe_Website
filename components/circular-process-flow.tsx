@@ -482,7 +482,7 @@ export function CircularProcessFlow() {
   const stepPositions = steps.map((_, index) => getStepPosition(index, radius, centerX, centerY))
 
   const handlePlayAnimation = () => {
-    setAnimationKey((prev) => prev + 1)
+    setAnimationKey((prev: number) => prev + 1)
     setIsAnimating(true)
     setActiveStep(null)
     setHighlightedStep(null)

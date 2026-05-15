@@ -486,4 +486,17 @@
       clip-path: none !important;
     }
   }
+
+  /* Ensure hamburger menu is always visible on mobile */
+  @media (max-width: 768px) {
+    nav .container {
+      position: relative;
+    }
+    
+    nav .container > div:last-of-type {
+      position: relative !important;
+      z-index: 100 !important;
+      min-width: 48px;
+    }
+  }
 }
